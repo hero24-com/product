@@ -23,7 +23,7 @@
         .kpi-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); }
         .feature-card { transition: all 0.3s ease; }
         .feature-card:hover { border-color: #ea4435; }
-        .competitor-table th, .competitor-table td { transition: background-color 0.3s ease; }
+        .competitor-table th, .competitor-table td { transition: background-color: 0.3s ease; }
         .timeline-item::before { content: ''; position: absolute; left: -2.375rem; top: 0; width: 1.25rem; height: 1.25rem; background-color: #f5f5f4; border: 4px solid #ea4435; border-radius: 9999px; z-index: 10; }
         .timeline-line { position: absolute; left: -1.875rem; top: 0; bottom: 0; width: 2px; background-color: #d6d3d1; }
         .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
@@ -242,9 +242,9 @@
             rows: [ { category: "Booking Model", data: ["Hybrid: Instant Book, RFQ, Bidding, Custom", "Direct Hire, Instant Book", "Lead Gen, RFQ, Instant Book", "Bidding, RFQ, Direct Hire", "Instant Book", "Instant Book, RFQ"] }, { category: "Pricing Model", data: ["Fixed, Hourly, Quotes, Subscriptions", "Hourly Rates", "Upfront, Quotes", "Credit-based, Quotes", "Upfront Pricing", "Upfront Pricing, Quotes"] }, { category: "Trust & Safety", data: ["Multi-Layered: Vetting, Escrow, Guarantee", "Background Checks, Pledge", "Screening, Guarantee", "Verified Reviews, Checks", "Checks, Guarantee", "Verified Professionals"] }, { category: "Seller Tools", data: ["Analytics, AI Leads, Procurement, Training", "Calendar Mgmt, Chat", "Lead Mgmt, Ads", "Lead Budgeting, Profile", "Schedule Mgmt", "In-app Support"] }, { category: "AI/Personalization", data: ["Core Engine: Bot, Predictive Recs, Route Opt.", "Basic Recs", "Basic Matching", "AI Chatbot, Matching", "Limited", "Basic Matching"] }, ]
         },
         roadmap: [
-            { id: 'phase1', phase: "Phase 1: Foundational Trust & UX", duration: "1-2 months", icon: '🛡️', description: "This initial phase focuses on building the bedrock of the V4 experience. Priorities include core UX refinements across all user flows, implementing social sign-in options, and launching the multi-layered trust architecture.", deliverables: ["Rigorous Seller Verification", "Secure Escrow Payment System", "Formal Hero24 Service Guarantee", "Core UI/UX Refinements"] },
-            { id: 'phase2', phase: "Phase 2: Intelligence & Empowerment", duration: "2-4 months", icon: '💡', description: "With the foundation of trust established, this phase introduces the platform's core intelligence to create a proactive and supportive ecosystem.", deliverables: ["AI-Powered Conversational Bot", "Intelligent Lead Matching for Sellers", "Advanced Seller Analytics Dashboard", "Performance Benchmarking Tools"] },
-            { id: 'phase3', phase: "Phase 3: Ecosystem & Innovation", duration: "4-6 months", icon: '🚀', description: "This phase focuses on expanding Hero24 from a marketplace into a true community and positions it for future growth with innovative technologies.", deliverables: ["Community Forum & Knowledge Base", "Integrated Supply Procurement System", "Loyalty & Rewards Program", "R&D on AR Tools & IoT Integration"] }
+            { id: 'phase1', phase: "The Trust Foundation", duration: "Months 1-2", icon: '🛡️', description: "Launch the core features that make Hero24 the safest platform on the market and provide a best-in-class user experience.", deliverables: ["Seller Verification Suite", "Secure Escrow & Credit System", "Hero24 Service Guarantee", "Core UI/UX Overhaul"] },
+            { id: 'phase2', phase: "The Intelligent Marketplace", duration: "Months 2-4", icon: '💡', description: "Roll out the AI engine and advanced management tools to create a proactive, efficient, and data-driven marketplace.", deliverables: ["AI-Powered Booking & Quoting", "Advanced Project Management", "Rich Communication Suite", "Seller Analytics Dashboard"] },
+            { id: 'phase3', phase: "The Community Ecosystem", duration: "Months 4-6", icon: '🚀', description: "Build features that drive long-term engagement, foster loyalty, and expand Hero24 beyond transactions into a true community.", deliverables: ["Loyalty & Referral Programs", "Community Hub & Tipping", "Seller Growth Tools (Procurement)", "Future Tech R&D"] }
         ],
         techStack: [ { name: "React Native", category: "Mobile Framework", description: "Build native iOS and Android apps from a single codebase for faster development and consistent UX." }, { name: "NestJS", category: "Backend Framework", description: "A progressive Node.js framework for building efficient, reliable, and scalable server-side applications." }, { name: "MongoDB", category: "Database", description: "A flexible, scalable NoSQL database ideal for the diverse data structures of a marketplace." }, { name: "AI / ML", category: "Intelligence Layer", description: "A core engine for personalization, matching, fraud detection, and operational optimization." }, { name: "WebSockets", category: "Real-Time Comms", description: "Powers real-time features like chat, status updates, and live location tracking." }, { name: "Microservices", category: "Future Architecture", description: "A potential transition to improve scalability, resilience, and development agility as the platform grows." }, { name: "WCAG Standards", category: "Accessibility", description: "A commitment to inclusivity, ensuring the app is usable by people with disabilities." }, { name: "CI/CD Pipeline", category: "DevOps", description: "Automated testing and deployment pipelines for faster, more reliable releases." }, ]
     };
@@ -449,6 +449,9 @@
             },
 
             parseMarkdown(text) {
+                // Handle potential error messages first
+                if (text.startsWith('<div')) return text;
+
                 let html = text
                     .replace(/^### (.*$)/gim, '<h3>$1</h3>')
                     .replace(/^## (.*$)/gim, '<h2 class="text-xl font-semibold text-slate-800 mb-3 mt-4">$1</h2>')
