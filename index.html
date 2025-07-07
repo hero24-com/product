@@ -30,7 +30,11 @@
         @media (min-width: 768px) { .chart-container { height: 350px; } }
         [x-cloak] { display: none !important; }
         .gemini-modal-backdrop { background-color: rgba(0, 0, 0, 0.5); }
-        .gemini-modal-content { white-space: pre-wrap; }
+        .gemini-modal-content h1 { font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; }
+        .gemini-modal-content h2 { font-size: 1.25rem; font-weight: bold; margin-bottom: 0.75rem; margin-top: 1.25rem; }
+        .gemini-modal-content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1rem; }
+        .gemini-modal-content p { margin-bottom: 0.75rem; }
+        .gemini-modal-content strong { font-weight: 600; }
         .loader { border-top-color: #ea4435; }
     </style>
 </head>
@@ -185,16 +189,18 @@
 
     </div>
     
-    <div id="geminiModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 gemini-modal-backdrop hidden" x-data="{ show: false }" x-show="show" x-transition @close-modal.window="show = false">
-        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] overflow-y-auto p-6" @click.away="show = false">
-            <h3 id="geminiModalTitle" class="text-xl font-bold text-slate-900 mb-4">AI-Generated Content</h3>
-            <div id="geminiModalContent" class="text-slate-600 space-y-4">
+    <div id="geminiModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 gemini-modal-backdrop hidden" x-data="{ show: false, type: '' }" x-show="show" x-transition @close-modal.window="show = false">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] flex flex-col" @click.away="show = false">
+            <div class="p-6 border-b border-gray-200">
+                <h3 id="geminiModalTitle" class="text-xl font-bold text-slate-900">AI-Generated Content</h3>
+            </div>
+            <div id="geminiModalContent" class="p-6 overflow-y-auto flex-grow">
                 <div class="flex justify-center items-center h-48">
                     <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
                 </div>
             </div>
-            <div class="mt-6 text-right">
-                <button @click="show = false" class="px-4 py-2 bg-slate-100 text-slate-700 font-semibold rounded-lg hover:bg-slate-200">Close</button>
+            <div class="p-4 bg-gray-50 border-t border-gray-200 text-right">
+                <button @click="show = false" class="px-4 py-2 bg-slate-200 text-slate-800 font-semibold rounded-lg hover:bg-slate-300">Close</button>
             </div>
         </div>
     </div>
@@ -217,6 +223,8 @@
                 { title: "Advanced Project Management", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>', description: "Centralized dashboard with real-time status updates and a new visual project timeline. Features in-app task checklists for transparency and allows for limited buyer-initiated edits to booked orders." },
                 { title: "Communication & Community", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>', description: "Upgraded chat with voice notes, video calls, and instant translation. A new community hub with forums and a knowledge base to position Hero24 as a trusted resource, not just a transaction platform." },
                 { title: "Secure & Flexible Payments", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>', description: "Support for mobile wallets (Apple/Google Pay). A cornerstone feature is the new Secure Escrow Service, holding payments until the job is approved. Advanced options like split and milestone payments for large projects." },
+                { title: "Platform Credits & Wallet", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>', description: "A streamlined refund process. Instead of cash returns, refunds from cancellations or disputes are issued as Hero24 Credits directly to your in-app wallet, ready to be used for discounts on any future service." },
+                { title: "Virtual Gifts & Tipping", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>', description: "Show extra appreciation for exceptional service. After a job is completed, buyers can send virtual gifts or add a tip directly to the seller, fostering a positive community and rewarding top performers." },
                 { title: "Referral & Loyalty Program", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm0 2c-2.21 0-4 1.79-4 4v1h8v-1c0-2.21-1.79-4-4-4zm6 4h-2v-1c0-1.103-.897-2-2-2s-2 .897-2 2v1H8v-1c0-1.103-.897-2-2-2s-2 .897-2 2v1H2v-1c0-2.21 1.79-4 4-4h8c2.21 0 4 1.79 4 4v1z" /></svg>', description: "Earn rewards by sharing Hero24. Refer a new buyer and get a percentage discount on your next service after their first booking. Accumulate points for activity to unlock exclusive perks." }
             ],
             seller: [
@@ -374,7 +382,9 @@
             
             initModal() {
                 const modal = document.getElementById('geminiModal');
-                modal._x_dataStack[0].show = false; 
+                if (modal && modal._x_dataStack) {
+                    modal._x_dataStack[0].show = false; 
+                }
 
                 document.body.addEventListener('click', async (e) => {
                     const button = e.target.closest('[data-gemini-type]');
@@ -386,7 +396,10 @@
 
                     if (type === 'requestGenerator') {
                         const input = document.getElementById('request-input').value.trim();
-                        if (!input) { alert('Please enter a short description first.'); return; }
+                        if (!input) { 
+                            this.showAlert('Input Required', 'Please enter a short description first.');
+                            return; 
+                        }
                         title = 'Generated Project Request';
                         prompt = `You are an expert home project planner helping a user write a job post. The user's initial request is: "${input}". Expand this into a detailed, clear, and comprehensive project description that a service provider can easily understand and quote. Include specific sections like 'Scope of Work', 'Key Areas', 'Special Instructions', and 'Desired Outcome'. Use Markdown for formatting.`;
                     } else if (type === 'quoteGenerator') {
@@ -400,27 +413,57 @@
                     }
 
                     if (prompt) {
-                        this.showGeminiModal(title);
+                        this.showGeminiModal(title, type);
                         const result = await this.callGeminiApi(prompt);
-                        this.updateGeminiModal(result);
+                        this.updateGeminiModal(result, type);
                     }
                 });
             },
             
-            showGeminiModal(title) {
+            showGeminiModal(title, type) {
+                const modal = document.getElementById('geminiModal');
                 document.getElementById('geminiModalTitle').textContent = title;
                 document.getElementById('geminiModalContent').innerHTML = '<div class="flex justify-center items-center h-48"><div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div></div>';
-                const modal = document.getElementById('geminiModal');
                 modal.classList.remove('hidden');
-                modal._x_dataStack[0].show = true;
+                if (modal && modal._x_dataStack) {
+                    modal._x_dataStack[0].show = true;
+                    modal._x_dataStack[0].type = type;
+                }
             },
             
-            updateGeminiModal(content) {
-                document.getElementById('geminiModalContent').innerHTML = content;
+            updateGeminiModal(content, type) {
+                const parsedContent = this.parseMarkdown(content);
+                let styledContent = '';
+
+                switch(type) {
+                    case 'quoteGenerator':
+                        styledContent = `<div class="bg-white p-6 border border-gray-200 rounded-lg shadow-sm">${parsedContent}</div>`;
+                        break;
+                    case 'roadmapAnalyzer':
+                        styledContent = `<div class="bg-stone-50 p-6 rounded-lg">${parsedContent}</div>`;
+                        break;
+                    default:
+                        styledContent = `<div>${parsedContent}</div>`;
+                }
+                document.getElementById('geminiModalContent').innerHTML = styledContent;
+            },
+
+            parseMarkdown(text) {
+                let html = text
+                    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                    .replace(/^## (.*$)/gim, '<h2 class="text-xl font-semibold text-slate-800 mb-3 mt-4">$1</h2>')
+                    .replace(/^# (.*$)/gim, '<h1 class="text-2xl font-bold text-slate-900 mb-4">$1</h1>')
+                    .replace(/\*\*(.*)\*\*/gim, '<strong>$1</strong>')
+                    .replace(/__(.*)__/gim, '<strong>$1</strong>')
+                    .replace(/^\s*\n\*/gm, '<ul>\n*')
+                    .replace(/^(\*.+)\s*\n([^\*])/gm, '$1\n</ul>\n\n$2')
+                    .replace(/^\* (.*)/gm, '<li class="ml-4 mb-1">$1</li>')
+                    .replace(/\n/g, '<br>');
+                return html.trim();
             },
 
             async callGeminiApi(prompt) {
-                const apiKey = "";
+                const apiKey = "AIzaSyCjikg__pCqtfoaXkel8owtx0K7NKnchZQ";
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                 const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
 
@@ -431,18 +474,57 @@
                         body: JSON.stringify(payload)
                     });
                     if (!response.ok) {
-                        throw new Error(`API call failed with status: ${response.status}`);
+                        const errorBody = await response.json();
+                        throw new Error(`API call failed with status: ${response.status}. ${errorBody.error.message}`);
                     }
                     const result = await response.json();
                     
-                    if (result.candidates && result.candidates.length > 0) {
+                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content && result.candidates[0].content.parts && result.candidates[0].content.parts.length > 0) {
                         return result.candidates[0].content.parts[0].text;
                     }
                     return "No content generated. The response format might have changed.";
                 } catch (error) {
                     console.error("Gemini API Error:", error);
-                    return `An error occurred while contacting the AI. Please check the console for details. Error: ${error.message}`;
+                    return `<div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md" role="alert">
+                                <p class="font-bold">AI Generation Failed</p>
+                                <p>An error occurred while contacting the AI. This is often due to an invalid or restricted API key.</p>
+                                <p class="text-sm mt-2"><strong>Details:</strong> ${error.message}</p>
+                            </div>`;
                 }
+            },
+
+            showAlert(title, message) {
+                if (!document.getElementById('custom-alert-style')) {
+                    const style = document.createElement('style');
+                    style.id = 'custom-alert-style';
+                    style.innerHTML = `
+                        .custom-alert-backdrop { position: fixed; inset: 0; background-color: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 100; }
+                        .custom-alert-box { background-color: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 400px; width: 90%; text-align: center; }
+                        .custom-alert-title { font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem; }
+                        .custom-alert-message { margin-bottom: 1.5rem; }
+                        .custom-alert-button { background-color: #ea4435; color: white; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; }
+                    `;
+                    document.head.appendChild(style);
+                }
+                const backdrop = document.createElement('div');
+                backdrop.className = 'custom-alert-backdrop';
+                const box = document.createElement('div');
+                box.className = 'custom-alert-box';
+                const titleEl = document.createElement('div');
+                titleEl.className = 'custom-alert-title';
+                titleEl.textContent = title;
+                const messageEl = document.createElement('div');
+                messageEl.className = 'custom-alert-message';
+                messageEl.textContent = message;
+                const button = document.createElement('button');
+                button.className = 'custom-alert-button';
+                button.textContent = 'OK';
+                button.onclick = () => { document.body.removeChild(backdrop); };
+                box.appendChild(titleEl);
+                box.appendChild(messageEl);
+                box.appendChild(button);
+                backdrop.appendChild(box);
+                document.body.appendChild(backdrop);
             }
         };
         
